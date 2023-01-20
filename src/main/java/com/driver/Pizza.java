@@ -1,14 +1,27 @@
-package com.driver;
-
-public class Pizza {
-
-    private int price;
-    private Boolean isVeg;
-    private String bill;
-
-    public Pizza(Boolean isVeg){
+public class Pizza{
+    private boolean isVeg;
+    private String bill="";
+    private int price; 
+    private boolean isCheeseAdded = false;
+    private boolean isToppingsAdded = false;
+    private boolean isTakeAwayAdded = false;
+    private int vegBasePrice = 300;
+    private int nonVegBasePrice = 400;
+    private int extraCheesePrice = 80;
+    private int vegTopping = 70;
+    private int nonVegTopping = 120;
+    private int takeAwayCharge = 20;
+    public Pizza(boolean isVeg){
         this.isVeg = isVeg;
-        // your code goes here
+
+        if(isVeg){
+            this.price += 300;
+            this.bill += "Base Price Of The Pizza: "+vegBasePrice+"\n";
+        }
+        else{
+            this.price += 400;
+            this.bill += "Base Price Of The Pizza: "+nonVegBasePrice+"\n";
+        }
     }
 
     public int getPrice(){
@@ -16,19 +29,44 @@ public class Pizza {
     }
 
     public void addExtraCheese(){
-        // your code goes here
+        if(!isCheeseAdded){
+            this.price += extraCheesePrice;
+
+            isCheeseAdded = true;
+        }
     }
 
     public void addExtraToppings(){
-        // your code goes here
+        if(!isToppingsAdded){
+            if(isVeg){
+                this.price += vegTopping;
+            }
+            else{
+                this.price += nonVegTopping;
+            }
+            isToppingsAdded = true;
+        }
     }
 
     public void addTakeaway(){
-        // your code goes here
+        this.price += takeAwayCharge;
+        isTakeAwayAdded = true;
     }
 
     public String getBill(){
-        // your code goes here
+        if(isCheeseAdded){
+            this.bill += "Extra Cheese Added: "+extraCheesePrice+"\n";
+        }
+        if(isToppingsAdded){
+            if(isVeg)
+                this.bill += "Extra Toppings Added: "+vegTopping+"\n";
+            else
+                this.bill += "Extra Toppings Added: "+nonVegTopping+"\n";
+        }
+        if(isTakeAwayAdded){
+            this.bill += "Paperbag Added: "+takeAwayCharge+"\n";
+        }
+        this.bill = this.bill+"Total Price: "+this.price;
         return this.bill;
     }
 }
